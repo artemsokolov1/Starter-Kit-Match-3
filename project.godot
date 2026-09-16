@@ -16,7 +16,7 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 config/name="Starter Kit Match-3"
 config/tags=PackedStringArray("starterkit")
-run/main_scene="uid://b8cjd5xlk3m1p"
+run/main_scene="uid://menu_scene_uid"
 config/features=PackedStringArray("4.6", "Forward Plus")
 boot_splash/bg_color=Color(0.9254902, 0.9254902, 0.9607843, 1)
 boot_splash/image="uid://dfelygr7jpcpe"
@@ -25,6 +25,7 @@ config/icon="uid://bk67gaj8ly6sy"
 [autoload]
 
 Audio="*res://scripts/audio.gd"
+GameManager="*res://scripts/game_manager.gd"
 
 [display]
 

@@ -4,10 +4,14 @@ signal tile_pressed(pos)
 
 var type:String
 var grid_position:Vector2i
+var is_selected: bool = false
 
 # Highlight tile when hovering mouse
 
 func _on_mouse_entered():
+	
+	if is_selected:
+		return
 	
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property($Sprite2D, "scale", Vector2(1.1, 1.1), 0.1)
@@ -16,6 +20,9 @@ func _on_mouse_entered():
 # Return to default state when mouse exits
 
 func _on_mouse_exited():
+	
+	if is_selected:
+		return
 	
 	var tween = create_tween().set_parallel(true)
 	tween.tween_property($Sprite2D, "scale", Vector2(1.0, 1.0), 0.1)
@@ -55,3 +62,15 @@ func move_to(target_position: Vector2, play_sound: bool = true):
 func _on_move_finished():
 	
 	Audio.play("res://sounds/tile-land.ogg", false, 1.2 - (grid_position.y * 0.05), 0.2)
+
+# Selection highlighting
+
+func set_selected(selected: bool):
+	is_selected = selected
+	
+	if selected:
+		$Sprite2D.modulate = Color(1.5, 1.5, 0.8)  # Yellowish tint
+		$Sprite2D.scale = Vector2(1.15, 1.15)
+	else:
+		$Sprite2D.modulate = Color(1, 1, 1)
+		$Sprite2D.scale = Vector2(1, 1)

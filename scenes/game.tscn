@@ -1,0 +1,125 @@
+[gd_scene format=3 uid="uid://game_scene_uid"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_game"]
+[ext_resource type="PackedScene" path="res://scenes/tile.tscn" id="2_tile"]
+[ext_resource type="PackedScene" path="res://scenes/sparkles.tscn" id="3_sparkles"]
+[ext_resource type="Texture2D" path="res://sprites/tiles/tile-godot.png" id="4_t0"]
+[ext_resource type="Texture2D" path="res://sprites/tiles/tile-spikes.png" id="5_t1"]
+[ext_resource type="Texture2D" path="res://sprites/tiles/tile-gem.png" id="6_t2"]
+[ext_resource type="Texture2D" path="res://sprites/tiles/tile-grass.png" id="7_t3"]
+[ext_resource type="Texture2D" path="res://sprites/tiles/tile-kenney.png" id="8_t4"]
+[ext_resource type="Texture2D" path="res://sprites/backgrounds/background.png" id="9_bg"]
+[ext_resource type="Texture2D" path="res://sprites/cursors/cursor-hand-open.png" id="10_cursor_open"]
+[ext_resource type="Texture2D" path="res://sprites/cursors/cursor-hand-closed.png" id="11_cursor_closed"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_game")
+tile_scene = ExtResource("2_tile")
+sparkles_scene = ExtResource("3_sparkles")
+textures = Array[Texture2D]([ExtResource("4_t0"), ExtResource("5_t1"), ExtResource("6_t2"), ExtResource("7_t3"), ExtResource("8_t4")])
+open_hand_cursor = ExtResource("10_cursor_open")
+closed_hand_cursor = ExtResource("11_cursor_closed")
+
+[node name="Background" type="TextureRect" parent="."]
+offset_right = 1280.0
+offset_bottom = 720.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+texture = ExtResource("9_bg")
+
+[node name="Board" type="Node2D" parent="."]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="UI"]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 200.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 24
+text = "Очки: 0"
+
+[node name="MovesLabel" type="Label" parent="UI"]
+offset_left = 20.0
+offset_top = 60.0
+offset_right = 200.0
+offset_bottom = 90.0
+theme_override_font_sizes/font_size = 24
+text = "Ходы: 20"
+
+[node name="LevelLabel" type="Label" parent="UI"]
+offset_left = 20.0
+offset_top = 100.0
+offset_right = 200.0
+offset_bottom = 130.0
+theme_override_font_sizes/font_size = 24
+text = "Уровень 1"
+
+[node name="GameOverPanel" type="Panel" parent="UI"]
+visible = false
+offset_left = 440.0
+offset_top = 260.0
+offset_right = 840.0
+offset_bottom = 460.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/GameOverPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/GameOverPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Игра окончена!"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="UI/GameOverPanel/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Заново"
+
+[node name="MenuButton" type="Button" parent="UI/GameOverPanel/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "В меню"
+
+[node name="LevelCompletePanel" type="Panel" parent="UI"]
+visible = false
+offset_left = 440.0
+offset_top = 260.0
+offset_right = 840.0
+offset_bottom = 460.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/LevelCompletePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UI/LevelCompletePanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Уровень пройден!"
+horizontal_alignment = 1
+
+[node name="NextLevelButton" type="Button" parent="UI/LevelCompletePanel/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "Следующий уровень"
+
+[node name="MenuButton" type="Button" parent="UI/LevelCompletePanel/VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "В меню"
+
+[connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="UI/GameOverPanel/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="UI/LevelCompletePanel/VBoxContainer/NextLevelButton" to="." method="_on_next_level_button_pressed"]
+[connection signal="pressed" from="UI/LevelCompletePanel/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
